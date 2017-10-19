@@ -19,7 +19,14 @@ library(ggthemes)
 ## Ingest Data
 ```{r dataingest}
 beers <- read.csv("./rawdata/Beers.csv") %>% rename(Beer_Name = Name)
+# Load Breweries Data
 breweries <- read.csv("./rawdata/Breweries.csv") %>% rename(Brewery_Name = Name)
+# Remove Leading/Trailing White Space from Factor/Character values
+beers[sapply(beers, class)%in%c("factor", "character")] <- lapply(beers[sapply(beers, class)%in%c("factor", "character")], 
+                                                                  function(x) gsub("^\\s|\\s$","",as.character(x)))
+breweries[sapply(breweries, class)%in%c("factor", "character")] <- lapply(breweries[sapply(breweries, class)%in%c("factor", "character")], 
+                                                                  function(x) gsub("^\\s|\\s$","",as.character(x)))
+
 
 ```
 
@@ -52,14 +59,14 @@ ggplot(
     summarise(med.val = median(val, na.rm = TRUE)),
   aes(x = State, fill = var, group = var)) +
   geom_bar(aes(y = med.val), stat = "identity", position = "dodge") +
-  facet_grid(var ~ ., scales = "free_y")
-
+  facet_grid(var ~ ., scales = "free_y") +
+  ggthemes::theme_hc() 
 ```
 
 ## Q5
 ```{r q5, fig.width=11}
 # Median ABV by state - ordered by median
-plot.df <- beers %>% group_by(State) %>% summarise(median.abv = median(ABV, na.rm = TRUE))
+plot.df <- beers %>% group_by(State) %>% summarise(median.abv = median(ABV, na.rm = TRUE)) %>% ungroup()
 plot.df$State <- factor(plot.df$State, levels = plot.df$State[order(plot.df$median.abv, decreasing = TRUE)])
 ggplot(plot.df, aes(State, y = median.abv)) + geom_bar(stat = "identity")
 
@@ -67,8 +74,6 @@ ggplot(plot.df, aes(State, y = median.abv)) + geom_bar(stat = "identity")
 plot.df <- beers %>% group_by(State) %>% summarise(median.ibu = median(IBU, na.rm = TRUE))
 plot.df$State <- factor(plot.df$State, levels = plot.df$State[order(plot.df$median.ibu, decreasing = TRUE)])
 ggplot(plot.df, aes(State, y = median.ibu)) + geom_bar(stat = "identity")
-
-
 ```
 
 ## Q6
@@ -81,9 +86,7 @@ ggplot(plot.df, aes(State, y = median.ibu)) + geom_bar(stat = "identity")
 ggplot(beers, aes(IBU, ABV))+
   geom_point() +
   geom_smooth(method = "lm")
-
 pander::pander(summary(lm(ABV ~ IBU, data = beers)))
-
 ```
 
 
