@@ -14,6 +14,19 @@ breweries <- read.csv("./rawdata/Breweries.csv") %>% rename(Brewery_Name = Name)
 
 ## Q1
 
+```r
+table(breweries$State)
+```
+
+```
+## 
+##  AK  AL  AR  AZ  CA  CO  CT  DC  DE  FL  GA  HI  IA  ID  IL  IN  KS  KY 
+##   7   3   2  11  39  47   8   1   2  15   7   4   5   5  18  22   3   4 
+##  LA  MA  MD  ME  MI  MN  MO  MS  MT  NC  ND  NE  NH  NJ  NM  NV  NY  OH 
+##   5  23   7   9  32  12   9   2   9  19   1   5   3   3   4   2  16  15 
+##  OK  OR  PA  RI  SC  SD  TN  TX  UT  VA  VT  WA  WI  WV  WY 
+##   6  29  25   5   4   1   3  28   4  16  10  23  20   1   4
+```
 
 
 ## Q2
@@ -24,6 +37,16 @@ beers <- merge(beers, breweries, by.x = "Brewery_id", by.y = "Brew_ID")
 
 ## Q3
 
+```r
+colSums(is.na(beers))
+```
+
+```
+##   Brewery_id    Beer_Name      Beer_ID          ABV          IBU 
+##            0            0            0           62         1005 
+##        Style       Ounces Brewery_Name         City        State 
+##            0            0            0            0            0
+```
 
 ## Q4
 
@@ -36,7 +59,7 @@ ggplot(
     group_by(State, var) %>%
     summarise(med.val = median(val, na.rm = TRUE)),
   aes(x = State, fill = var, group = var)) +
-  geom_bar(aes(y = med.val), stat = "identity", position = "dodge") +
+  geom_bar(aes(y = med.val), stat = "identity",  position = "dodge") +
   facet_grid(var ~ ., scales = "free_y")
 ```
 
@@ -72,6 +95,14 @@ ggplot(plot.df, aes(State, y = median.ibu)) + geom_bar(stat = "identity")
 
 ## Q6
 
+```r
+summary(beers$ABV)
+```
+
+```
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+## 0.00100 0.05000 0.05600 0.05977 0.06700 0.12800      62
+```
 
 ## Q7
 
