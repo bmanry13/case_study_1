@@ -17,18 +17,14 @@ library(ggthemes)
 ```
 
 ## Ingest Data
-```{r dataingest}
-beers <- read.csv("./rawdata/Beers.csv") %>% rename(Beer_Name = Name)
-breweries <- read.csv("./rawdata/Breweries.csv") %>% rename(Brewery_Name = Name)
-
+```{r dataingest, results='hide'}
+source("data_processing.R")
 ```
-
 
 ## Q1
 ```{r q1}
 table(breweries$State)
 ```
-
 
 ## Q2
 ```{r q2}
