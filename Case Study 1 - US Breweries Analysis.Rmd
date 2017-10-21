@@ -17,25 +17,14 @@ library(ggthemes)
 ```
 
 ## Ingest Data
-```{r dataingest}
-beers <- read.csv("./rawdata/Beers.csv") %>% rename(Beer_Name = Name)
-# Load Breweries Data
-breweries <- read.csv("./rawdata/Breweries.csv") %>% rename(Brewery_Name = Name)
-# Remove Leading/Trailing White Space from Factor/Character values
-beers[sapply(beers, class)%in%c("factor", "character")] <- lapply(beers[sapply(beers, class)%in%c("factor", "character")], 
-                                                                  function(x) gsub("^\\s|\\s$","",as.character(x)))
-breweries[sapply(breweries, class)%in%c("factor", "character")] <- lapply(breweries[sapply(breweries, class)%in%c("factor", "character")], 
-                                                                  function(x) gsub("^\\s|\\s$","",as.character(x)))
-
-
+```{r dataingest, results='hide'}
+source("data_processing.R")
 ```
-
 
 ## Q1
 ```{r q1}
 
 ```
-
 
 ## Q2
 ```{r q2}
