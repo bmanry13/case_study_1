@@ -17,7 +17,7 @@ library(ggthemes)
 ```
 
 ## Ingest Data
-```{r dataingest, results='hide'}
+```{r dataingest, results='hide', message=FALSE}
 source("data_processing.R")
 ```
 
