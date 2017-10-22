@@ -21,23 +21,26 @@ library(ggthemes)
 source("data_processing.R")
 ```
 
-## Q1
+## Q1: How many breweries are present in each state?
 ```{r q1}
 table(breweries$State)
 ```
+#### The number of breweries in each state are shown in the table. The top five are Colorado with 47, California with 39, Michigan with 32, Oregon with 29 and Texas with 28.
 
-## Q2
+## Q2: Merge data and print first and last six observations
 ```{r q2}
 beers <- merge(beers, breweries, by.x = "Brewery_id", by.y = "Brew_ID")
 
 ```
+#### The merged data is in a data frame called beers. The first six beers are Get Together, Maggie's Leap, Wall's End, Pumpion, Stronghold, and Parapet ESB. The last six beers are Pilsner Ukiah, Heinnieweisse Weissebier, Snapperhead IPA, Moo Thunder Stout, Porkslap Pale Ale, and Urban Wilderness Pale Ale.
 
-## Q3
+## Q3: Report the number of NA's in each column
 ```{r q3}
 colSums(is.na(beers))
 ```
+#### The ABV column has 62 NAs, the IBU column has 1005 NAs, and the other columns have 0 NAs.
 
-## Q4
+## Q4: Compute the median alcohol content and international bitterness unit for each state. Plot a bar chart to compare
 ```{r q4, fig.width=11}
 # Median ABV and IBU by State Alpha
 ggplot(
@@ -51,8 +54,9 @@ ggplot(
   facet_grid(var ~ ., scales = "free_y")
 
 ```
+#### The states with the highest median ABV are the District of Columbia, Kentucky, Michigan, New Mexico, and West Virginia respectively. The states with the highest IBU are Maine, West Virginia, Florida, Georgia, and Deleware respectively.
 
-## Q5
+## Q5: Which state has the maximum alcoholic beer? Which state has the most bitter beer?
 ```{r q5, fig.width=11}
 # Median ABV by state - ordered by median
 plot.df <- beers %>% group_by(State) %>% summarise(median.abv = median(ABV, na.rm = TRUE))
@@ -66,13 +70,15 @@ ggplot(plot.df, aes(State, y = median.ibu)) + geom_bar(stat = "identity")
 
 
 ```
+#### The state that has the maximum alcoholic beer is the District of Columbia. The state that has the most bitter beer is Maine.
 
-## Q6
+## Q6: Summary statistics for the ABV
 ```{r q6}
 summary(beers$ABV)
 ```
+#### The mean for the ABV variable is 0.05977 and the median is 0.056. The first quartile is 0.05 and the third quartile is 0.067 and the values range from 0.001 to 0.128 with 62 NAs.
 
-## Q7
+## Q7: Is there an apparent relationship between the bitterness of the beer and its alcoholic content?
 ```{r q7}
 ggplot(beers, aes(IBU, ABV))+
   geom_point() +
@@ -82,6 +88,8 @@ pander::pander(summary(lm(ABV ~ IBU, data = beers)))
 
 ```
 
+
+#### The model explains 44.93% of the variation in the ABV is explained by the IBU. As a result, there is not a strong linear relationship between ABV and IBU.
 
 
 
