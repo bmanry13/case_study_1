@@ -137,7 +137,41 @@ ggplot(plot.df, aes(State, y = median.ibu)) + geom_bar(stat = "identity")
 ```
 
 ![](Case_Study_1_-_US_Breweries_Analysis_files/figure-html/q5-2.png)<!-- -->
-The state that has the maximum alcoholic beer is the District of Columbia. The state that has the most bitter beer is Maine.
+
+**Looking at the State's median:** The state that has the maximum  alcoholic beers is the District of Columbia. The state that has the most bitter beers is Maine.
+
+
+```r
+#Maximum ABV of all States
+MaxABV <- beers[which.max(beers$ABV),]
+ggplot(beers, aes(x=State, y=ABV)) + geom_point(col="gray38", size=2) +geom_point(data=MaxABV, col="red2", size=2.5) + geom_text(data=MaxABV, label="Max ABV", vjust=1.4) + geom_segment(aes(x=State, xend= State, y=min(ABV), yend=max(ABV)), linetype="dashed", size=0.1) + labs(title= "ABV values for Corresponding States") + theme(axis.text.x=element_text(angle=90, hjust=1))
+```
+
+```
+## Warning: Removed 62 rows containing missing values (geom_point).
+```
+
+```
+## Warning: Removed 2240 rows containing missing values (geom_segment).
+```
+
+![](Case_Study_1_-_US_Breweries_Analysis_files/figure-html/q6 part2-1.png)<!-- -->
+
+```r
+#Maximum IBU of all States
+MaxIBU <- beers[which.max(beers$IBU),]
+ggplot(beers, aes(x=State, y=IBU)) + geom_point(col="gray38", size=2) +geom_point(data=MaxIBU, col="red2", size=2.5) + geom_text(data=MaxIBU, label="Max IBU", vjust=1.4) + geom_segment(aes(x=State, xend= State, y=min(IBU), yend=max(IBU)), linetype="dashed", size=0.1) + labs(title= "IBU values for Corresponding States") + theme(axis.text.x=element_text(angle=90, hjust=1))
+```
+
+```
+## Warning: Removed 973 rows containing missing values (geom_point).
+
+## Warning: Removed 2240 rows containing missing values (geom_segment).
+```
+
+![](Case_Study_1_-_US_Breweries_Analysis_files/figure-html/q6 part2-2.png)<!-- -->
+
+**Looking at the Maximums:** The state that has the maximum  alcoholic beer is Colorado. The state that has the most bitter beer is Oregon.
 
 ## Q6: Summary statistics for the ABV
 
