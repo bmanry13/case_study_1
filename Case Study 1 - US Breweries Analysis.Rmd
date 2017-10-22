@@ -6,10 +6,12 @@ output:
   html_document:
     keep_md: true
     theme: journal
+    toc: true
+    toc_float: true
 ---
 
 ```{r setup, warning=FALSE, message=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, message=FALSE)
 library(dplyr)
 library(kableExtra)
 library(knitr)
@@ -29,9 +31,6 @@ source("data_processing.R")
 ```
 
 ## Q1: How many breweries are present in each state?
-```{r q1}
-DT::datatable(as.data.frame(table(breweries$State), responseName = "Number of Breweries") %>% rename(State = Var1), rownames = FALSE)
-```
 
 ```{r q1map, fig.width=11, fig.height=6}
 usa.states.shape@data <- usa.states.shape@data %>%
@@ -41,19 +40,19 @@ usa.states.shape@data <- usa.states.shape@data %>%
 makeMap(usa.states.shape,"n_breweries", "Number of Breweries by State")
 ```
 
-#### The number of breweries in each state are shown in the table. The top five are Colorado with 47, California with 39, Michigan with 32, Oregon with 29 and Texas with 28.
+The number of breweries in each state are shown in the table. The top five are Colorado with 47, California with 39, Michigan with 32, Oregon with 29 and Texas with 28. A full table of state brewery counts can be found [at the bottom of this report](#countTable)
 
 ## Q2: Merge data and print first and last six observations
 ```{r q2}
 beers <- merge(beers, breweries, by.x = "Brewery_id", by.y = "Brew_ID")
 ```
-#### The merged data is in a data frame called beers. The first six beers are Get Together, Maggie's Leap, Wall's End, Pumpion, Stronghold, and Parapet ESB. The last six beers are Pilsner Ukiah, Heinnieweisse Weissebier, Snapperhead IPA, Moo Thunder Stout, Porkslap Pale Ale, and Urban Wilderness Pale Ale.
+The merged data is in a data frame called beers. The first six beers are Get Together, Maggie's Leap, Wall's End, Pumpion, Stronghold, and Parapet ESB. The last six beers are Pilsner Ukiah, Heinnieweisse Weissebier, Snapperhead IPA, Moo Thunder Stout, Porkslap Pale Ale, and Urban Wilderness Pale Ale.
 
 ## Q3: Report the number of NA's in each column
 ```{r q3}
 colSums(is.na(beers))
 ```
-#### The ABV column has 62 NAs, the IBU column has 1005 NAs, and the other columns have 0 NAs.
+The ABV column has 62 NAs, the IBU column has 1005 NAs, and the other columns have 0 NAs.
 
 ## Q4: Compute the median alcohol content and international bitterness unit for each state. Plot a bar chart to compare
 ```{r q4, fig.width=11}
@@ -87,7 +86,7 @@ usa.states.shape@data <- usa.states.shape@data %>%
 makeMap(usa.states.shape, "med_ibu", "Median IBU by State",seq(21,61,10))
 ```
 
-#### The states with the highest median ABV are the District of Columbia, Kentucky, Michigan, New Mexico, and West Virginia respectively. The states with the highest IBU are Maine, West Virginia, Florida, Georgia, and Deleware respectively.
+The states with the highest median ABV are the District of Columbia, Kentucky, Michigan, New Mexico, and West Virginia respectively. The states with the highest IBU are Maine, West Virginia, Florida, Georgia, and Deleware respectively.
 
 ## Q5: Which state has the maximum alcoholic beer? Which state has the most bitter beer?
 ```{r q5, fig.width=11}
@@ -102,13 +101,13 @@ plot.df$State <- factor(plot.df$State, levels = plot.df$State[order(plot.df$medi
 ggplot(plot.df, aes(State, y = median.ibu)) + geom_bar(stat = "identity")
 
 ```
-#### The state that has the maximum alcoholic beer is the District of Columbia. The state that has the most bitter beer is Maine.
+The state that has the maximum alcoholic beer is the District of Columbia. The state that has the most bitter beer is Maine.
 
 ## Q6: Summary statistics for the ABV
 ```{r q6}
 summary(beers$ABV)
 ```
-#### The mean for the ABV variable is 0.05977 and the median is 0.056. The first quartile is 0.05 and the third quartile is 0.067 and the values range from 0.001 to 0.128 with 62 NAs.
+The mean for the ABV variable is 0.05977 and the median is 0.056. The first quartile is 0.05 and the third quartile is 0.067 and the values range from 0.001 to 0.128 with 62 NAs.
 
 ## Q7: Is there an apparent relationship between the bitterness of the beer and its alcoholic content?
 ```{r q7}
@@ -120,9 +119,13 @@ pander::pander(summary(lm(ABV ~ IBU, data = beers)))
 
 ```
 
+The model explains 44.93% of the variation in the ABV is explained by the IBU. As a result, there is not a strong linear relationship between ABV and IBU.
 
-#### The model explains 44.93% of the variation in the ABV is explained by the IBU. As a result, there is not a strong linear relationship between ABV and IBU.
-
+## Appendix
+### State Count Table {#countTable}
+```{r q1}
+as.data.frame(table(breweries$State), responseName = "Number of Breweries") %>% rename(State = Var1) %>% kable()
+```
 
 
 
