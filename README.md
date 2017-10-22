@@ -1,1 +1,18 @@
-# case_study_1
+# Case Study 1 README
+
+## Introduction 
+This repository contains the project to Case Study 1- US Breweries Analysis. This project used R, Rmarkdown, Github and Git.
+
+## Purpose 
+The Company Hotshot Hops is expanding their brewery across the nation. This analysis was used to determine which states they would succeed in based on the ABV and IBU of their beer. 
+
+## Instructions for reproducing output
+ 1. Clone this repository
+ 2. Download and install the libraries
+ 3. Load the packages
+ 4. Run "data_processing.R" to tidy data
+ 5. Perform analysis on tidy data using file "Case Study 1- US Breweries Analysis.Rmd"
+
+
+## Contributors: 
+Brychan Manry and Patricia Goresen
