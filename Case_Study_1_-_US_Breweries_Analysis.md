@@ -1,8 +1,22 @@
-# Case Study 1 - US Breweries
+# Analysis of US Brewery Market
 Brychan Manry and Patricia Goresen  
 October 23, 2017  
 
 
+```r
+knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
+library(kableExtra)
+library(knitr)
+library(ggplot2)
+library(ggthemes)
+library(tmap)
+library(tmaptools)
+library(grid)
+
+# source custom functions
+source("custom_functions.R")
+```
 
 ## Ingest Data
 
@@ -10,29 +24,52 @@ October 23, 2017
 source("data_processing.R")
 ```
 
-## Q1
+## Q1: How many breweries are present in each state?
 
 ```r
-table(breweries$State)
+DT::datatable(as.data.frame(table(breweries$State), responseName = "Number of Breweries") %>% rename(State = Var1), rownames = FALSE)
+```
+
+<!--html_preserve--><div id="htmlwidget-8dffed11eb4bcc77caa2" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-8dffed11eb4bcc77caa2">{"x":{"filter":"none","data":[["AK","AL","AR","AZ","CA","CO","CT","DC","DE","FL","GA","HI","IA","ID","IL","IN","KS","KY","LA","MA","MD","ME","MI","MN","MO","MS","MT","NC","ND","NE","NH","NJ","NM","NV","NY","OH","OK","OR","PA","RI","SC","SD","TN","TX","UT","VA","VT","WA","WI","WV","WY"],[7,3,2,11,39,47,8,1,2,15,7,4,5,5,18,22,3,4,5,22,7,9,32,11,9,2,9,19,1,5,3,3,4,2,16,15,6,29,25,5,4,1,3,28,4,15,9,23,19,1,4]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>State<\/th>\n      <th>Number.of.Breweries<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":1}],"order":[],"autoWidth":false,"orderClasses":false},"selection":{"mode":"multiple","selected":null,"target":"row"}},"evals":[],"jsHooks":[]}</script><!--/html_preserve-->
+
+
+```r
+usa.states.shape@data <- usa.states.shape@data %>%
+  left_join(
+    breweries %>% group_by(State) %>% summarise(n_breweries = n())
+  )
 ```
 
 ```
-## 
-## AK AL AR AZ CA CO CT DC DE FL GA HI IA ID IL IN KS KY LA MA MD ME MI MN MO 
-##  7  3  2 11 39 47  8  1  2 15  7  4  5  5 18 22  3  4  5 22  7  9 32 11  9 
-## MS MT NC ND NE NH NJ NM NV NY OH OK OR PA RI SC SD TN TX UT VA VT WA WI WV 
-##  2  9 19  1  5  3  3  4  2 16 15  6 29 25  5  4  1  3 28  4 15  9 23 19  1 
-## WY 
-##  4
+## Joining, by = "State"
 ```
 
-## Q2
+```
+## Warning: Column `State` joining factor and character vector, coercing into
+## character vector
+```
+
+```r
+makeMap(usa.states.shape,"n_breweries", "Number of Breweries by State")
+```
+
+```
+## tmap mode set to plotting
+```
+
+![](Case_Study_1_-_US_Breweries_Analysis_files/figure-html/q1map-1.png)<!-- -->
+
+#### The number of breweries in each state are shown in the table. The top five are Colorado with 47, California with 39, Michigan with 32, Oregon with 29 and Texas with 28.
+
+## Q2: Merge data and print first and last six observations
 
 ```r
 beers <- merge(beers, breweries, by.x = "Brewery_id", by.y = "Brew_ID")
 ```
+#### The merged data is in a data frame called beers. The first six beers are Get Together, Maggie's Leap, Wall's End, Pumpion, Stronghold, and Parapet ESB. The last six beers are Pilsner Ukiah, Heinnieweisse Weissebier, Snapperhead IPA, Moo Thunder Stout, Porkslap Pale Ale, and Urban Wilderness Pale Ale.
 
-## Q3
+## Q3: Report the number of NA's in each column
 
 ```r
 colSums(is.na(beers))
@@ -44,8 +81,9 @@ colSums(is.na(beers))
 ##        Style       Ounces Brewery_Name         City        State 
 ##            5            0            0            0            0
 ```
+#### The ABV column has 62 NAs, the IBU column has 1005 NAs, and the other columns have 0 NAs.
 
-## Q4
+## Q4: Compute the median alcohol content and international bitterness unit for each state. Plot a bar chart to compare
 
 ```r
 # Median ABV and IBU by State Alpha
@@ -66,7 +104,53 @@ ggplot(
 
 ![](Case_Study_1_-_US_Breweries_Analysis_files/figure-html/q4-1.png)<!-- -->
 
-## Q5
+
+```r
+usa.states.shape@data <- usa.states.shape@data %>%
+  left_join(
+    beers %>% group_by(State) %>% summarise(med_abv = median(ABV, na.rm = TRUE))
+  )
+```
+
+```
+## Joining, by = "State"
+```
+
+```r
+makeMap(usa.states.shape, "med_abv", "Median ABV by State",seq(0.04,0.07,.005))
+```
+
+```
+## tmap mode set to plotting
+```
+
+![](Case_Study_1_-_US_Breweries_Analysis_files/figure-html/q4mapabv-1.png)<!-- -->
+
+
+```r
+usa.states.shape@data <- usa.states.shape@data %>%
+  left_join(
+    beers %>% group_by(State) %>% summarise(med_ibu = median(IBU, na.rm = TRUE))
+  )
+```
+
+```
+## Joining, by = "State"
+```
+
+```r
+makeMap(usa.states.shape, "med_ibu", "Median IBU by State",seq(21,61,10))
+```
+
+```
+## tmap mode set to plotting
+```
+
+![](Case_Study_1_-_US_Breweries_Analysis_files/figure-html/q4mapibu-1.png)<!-- -->
+
+#### The states with the highest median ABV are the District of Columbia, Kentucky, Michigan, New Mexico, and West Virginia respectively. The states with the highest IBU are Maine, West Virginia, Florida, Georgia, and Deleware respectively.
+
+## Q5: Which state has the maximum alcoholic beer? Which state has the most bitter beer?
 
 ```r
 # Median ABV by state - ordered by median
@@ -89,8 +173,9 @@ ggplot(plot.df, aes(State, y = median.ibu)) + geom_bar(stat = "identity")
 ```
 
 ![](Case_Study_1_-_US_Breweries_Analysis_files/figure-html/q5-2.png)<!-- -->
+#### The state that has the maximum alcoholic beer is the District of Columbia. The state that has the most bitter beer is Maine.
 
-## Q6
+## Q6: Summary statistics for the ABV
 
 ```r
 summary(beers$ABV)
@@ -100,8 +185,9 @@ summary(beers$ABV)
 ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
 ## 0.00100 0.05000 0.05600 0.05987 0.06800 0.12800      62
 ```
+#### The mean for the ABV variable is 0.05977 and the median is 0.056. The first quartile is 0.05 and the third quartile is 0.067 and the values range from 0.001 to 0.128 with 62 NAs.
 
-## Q7
+## Q7: Is there an apparent relationship between the bitterness of the beer and its alcoholic content?
 
 ```r
 ggplot(beers, aes(IBU, ABV))+
@@ -141,6 +227,8 @@ pander::pander(summary(lm(ABV ~ IBU, data = beers)))
 
 Table: Fitting linear model: ABV ~ IBU
 
+
+#### The model explains 44.93% of the variation in the ABV is explained by the IBU. As a result, there is not a strong linear relationship between ABV and IBU.
 
 
 

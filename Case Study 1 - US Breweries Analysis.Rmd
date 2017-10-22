@@ -1,19 +1,26 @@
 ---
-title: "Case Study 1 - US Breweries"
+title: "Analysis of US Brewery Market"
 author: "Brychan Manry and Patricia Goresen"
 date: "October 23, 2017"
 output: 
   html_document:
     keep_md: true
+    theme: journal
 ---
 
-```{r setup, include=FALSE}
+```{r setup, warning=FALSE, message=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(dplyr)
 library(kableExtra)
 library(knitr)
 library(ggplot2)
 library(ggthemes)
+library(tmap)
+library(tmaptools)
+library(grid)
+
+# source custom functions
+source("custom_functions.R")
 ```
 
 ## Ingest Data
@@ -23,14 +30,22 @@ source("data_processing.R")
 
 ## Q1: How many breweries are present in each state?
 ```{r q1}
-table(breweries$State)
+DT::datatable(as.data.frame(table(breweries$State), responseName = "Number of Breweries") %>% rename(State = Var1), rownames = FALSE)
 ```
+
+```{r q1map, fig.width=11, fig.height=6}
+usa.states.shape@data <- usa.states.shape@data %>%
+  left_join(
+    breweries %>% group_by(State) %>% summarise(n_breweries = n())
+  )
+makeMap(usa.states.shape,"n_breweries", "Number of Breweries by State")
+```
+
 #### The number of breweries in each state are shown in the table. The top five are Colorado with 47, California with 39, Michigan with 32, Oregon with 29 and Texas with 28.
 
 ## Q2: Merge data and print first and last six observations
 ```{r q2}
 beers <- merge(beers, breweries, by.x = "Brewery_id", by.y = "Brew_ID")
-
 ```
 #### The merged data is in a data frame called beers. The first six beers are Get Together, Maggie's Leap, Wall's End, Pumpion, Stronghold, and Parapet ESB. The last six beers are Pilsner Ukiah, Heinnieweisse Weissebier, Snapperhead IPA, Moo Thunder Stout, Porkslap Pale Ale, and Urban Wilderness Pale Ale.
 
@@ -54,6 +69,24 @@ ggplot(
   facet_grid(var ~ ., scales = "free_y")
 
 ```
+
+```{r q4mapabv, fig.width=11}
+usa.states.shape@data <- usa.states.shape@data %>%
+  left_join(
+    beers %>% group_by(State) %>% summarise(med_abv = median(ABV, na.rm = TRUE))
+  )
+
+makeMap(usa.states.shape, "med_abv", "Median ABV by State",seq(0.04,0.07,.005))
+```
+
+```{r q4mapibu, fig.width=11}
+usa.states.shape@data <- usa.states.shape@data %>%
+  left_join(
+    beers %>% group_by(State) %>% summarise(med_ibu = median(IBU, na.rm = TRUE))
+  )
+makeMap(usa.states.shape, "med_ibu", "Median IBU by State",seq(21,61,10))
+```
+
 #### The states with the highest median ABV are the District of Columbia, Kentucky, Michigan, New Mexico, and West Virginia respectively. The states with the highest IBU are Maine, West Virginia, Florida, Georgia, and Deleware respectively.
 
 ## Q5: Which state has the maximum alcoholic beer? Which state has the most bitter beer?
@@ -67,7 +100,6 @@ ggplot(plot.df, aes(State, y = median.abv)) + geom_bar(stat = "identity")
 plot.df <- beers %>% group_by(State) %>% summarise(median.ibu = median(IBU, na.rm = TRUE))
 plot.df$State <- factor(plot.df$State, levels = plot.df$State[order(plot.df$median.ibu, decreasing = TRUE)])
 ggplot(plot.df, aes(State, y = median.ibu)) + geom_bar(stat = "identity")
-
 
 ```
 #### The state that has the maximum alcoholic beer is the District of Columbia. The state that has the most bitter beer is Maine.

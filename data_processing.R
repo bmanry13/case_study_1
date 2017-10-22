@@ -8,14 +8,17 @@
 #               from the US Census Bureau TIGER repository
 #
 # R libraries: dplyr, readr
-# input files: Beers.csv, Breweries.csv, /cb_2016_us_state_500k (shapefile folder)
+# input files: Beers.csv, Breweries.csv, /mapdata/cb_2016_us_state_500k (shapefile folder)
 #
 # Output:
 #   1) beers -> data.frame, each row is an individual beer
 #   2) breweries -> data.fream, each row is an individual brewery
-#   3) usa.states.shape -> SpatialPolygonsDataFrame, shapefile object for maps 
+#   3) usa.states.shape -> SpatialPolygonsDataFrame, shapefile object for US 
 #                           using rdgal library
 #################################################################################'
+##### Load Libraries #####
+library(dplyr)
+library(readr)
 
 ##### 1) READ IN RAW CSV FILES PROVIDED FOR ANALYSIS #####
 # NOTE: set encoding to "UTF8" deal with issues handling special characters (e.g, è)
@@ -119,12 +122,16 @@ beers$ABV[is.nan(beers$ABV)] <- NA
 beers$IBU[is.nan(beers$IBU)] <- NA
 dedupDF() 
 
-##### 8) Cleanup #####
-rm(list = ls()[!ls()%in%c("beers", "breweries")])
 
-
+##### 8) LOAD USA MAP SHAPE FILE #####
 usa.states.shape <- rgdal::readOGR("mapdata","cb_2016_us_state_500k")
-usa.states.shape@data <- usa.states.shape@data %>% 
-  rename(State = STUSPS) %>%
-  filter(State%in%breweries$State)
+usa.states.shape@data <- usa.states.shape@data %>% rename(State = STUSPS)
+usa.states.shape <- subset(usa.states.shape, State%in%breweries$State)
+
+##### 9) Cleanup #####
+rm(list = c("beerIDTable", "dedupDF", "removeLeadTrailWS"))
+
+
+
+
 
