@@ -1,7 +1,7 @@
 # Codebook for Case Study 1- US Breweries
 
 # Introduction
-This codebook contains information about the raw datasets, how it was cleaned and merged, and the final, tidy dataset.
+This codebook contains information about the raw datasets, how it was cleaned and merged, and the tidy dataset.
 
 # Raw Data Sets:
 * Beers.csv
