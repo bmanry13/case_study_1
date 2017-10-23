@@ -290,6 +290,8 @@ WI                        19
 WV                         1
 WY                         4
 
+### Link to Github Repository
+[link] (https://github.com/bmanry13/case_study_1)
 
 
 

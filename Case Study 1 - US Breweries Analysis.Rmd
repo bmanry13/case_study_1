@@ -139,6 +139,8 @@ The model explains 44.93% of the variation in the ABV is explained by the IBU. A
 as.data.frame(table(breweries$State), responseName = "Number of Breweries") %>% rename(State = Var1) %>% kable()
 ```
 
+### Link to Github Repository
+[link] (https://github.com/bmanry13/case_study_1)
 
 
 
