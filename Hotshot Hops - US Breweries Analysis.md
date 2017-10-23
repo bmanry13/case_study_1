@@ -5,27 +5,10 @@ October 23, 2017
 
 ```r
 knitr::opts_chunk$set(echo = TRUE, message=FALSE)
-library(dplyr)
-library(kableExtra)
-library(knitr)
-library(ggplot2)
-library(ggthemes)
-library(tmap)
-library(tmaptools)
-library(grid)
-
-# source custom functions
-source("custom_functions.R")
 ```
 
 # Introduction 
 The Company Hotshot Hops is creating a plan to expand their brewery across the nation. This analysis used datasets "beer.csv" and "breweries.csv" to look at different factors that determine the success Hopshot will have in each state.
-
-## Ingest Data
-
-```r
-source("data_processing.R")
-```
 
 ## Q1: How many breweries are present in each state?
 #### **Reasoning:** More breweries means there will be more competition in that state.
@@ -46,7 +29,7 @@ usa.states.shape@data <- usa.states.shape@data %>%
 makeMap(usa.states.shape,"n_breweries", "Number of Breweries by State")
 ```
 
-![](Case_Study_1_-_US_Breweries_Analysis_files/figure-html/q1map-1.png)<!-- -->
+![](HOTSHO~1/figure-html/q1map-1.png)<!-- -->
 The number of breweries in each state are shown in the table. The top five are Colorado with 47, California with 39, Michigan with 32, Oregon with 29 and Texas with 28. A full table of state brewery counts can be found [at the bottom of this report](#countTable)
 
 #### **Conclusion:** Since Colorado has the most breweries, we might not want to expand there.
@@ -144,7 +127,7 @@ ggplot(
 ## Warning: Removed 1 rows containing missing values (geom_bar).
 ```
 
-![](Case_Study_1_-_US_Breweries_Analysis_files/figure-html/q4-1.png)<!-- -->
+![](HOTSHO~1/figure-html/q4-1.png)<!-- -->
 
 
 #### **ABV Reasoning:** A low median alcohol content could suggest there are strict state laws against brewing beers with higher alcohol content.  
@@ -160,12 +143,12 @@ usa.states.shape@data <- usa.states.shape@data %>%
 makeMap(usa.states.shape, "med_abv", "Median ABV by State",seq(0.04,0.07,.005))
 ```
 
-![](Case_Study_1_-_US_Breweries_Analysis_files/figure-html/q4mapabv-1.png)<!-- -->
+![](HOTSHO~1/figure-html/q4mapabv-1.png)<!-- -->
 
 
 #### **Conclusion:** Since we do not want to expand in a state with strict laws against higher alcohol contents we will rule out expanding in Utah and Massachusetts. We will consider expanding in District of Columbia, Kentucky, Michigan, New Mexico, and West Virginia.  
 
-#### **IBU reasoning:** Our beer has a relatively high international bitterness unit, “IBU”. As a result, we want to expand in a state that is use to drinking beers with higher IBUs.  
+#### **IBU reasoning:** Our beer has a relatively high international bitterness unit, â€œIBUâ€. As a result, we want to expand in a state that is use to drinking beers with higher IBUs.  
 
 
 
@@ -177,7 +160,7 @@ usa.states.shape@data <- usa.states.shape@data %>%
 makeMap(usa.states.shape, "med_ibu", "Median IBU by State",seq(21,61,10))
 ```
 
-![](Case_Study_1_-_US_Breweries_Analysis_files/figure-html/q4mapibu-1.png)<!-- -->
+![](HOTSHO~1/figure-html/q4mapibu-1.png)<!-- -->
 
 
 #### **Conclusion:** Since Maine, West Virginia, Florida, Georgia, and Deleware have the highest median IBUs we will consider expanding there. We will rule out all states that are in the 21 to 31 range.
@@ -198,7 +181,7 @@ plot.df$State <- factor(plot.df$State, levels = plot.df$State[order(plot.df$medi
 ggplot(plot.df, aes(State, y = median.abv)) + geom_bar(stat = "identity")
 ```
 
-![](Case_Study_1_-_US_Breweries_Analysis_files/figure-html/q5-1.png)<!-- -->
+![](HOTSHO~1/figure-html/q5-1.png)<!-- -->
 
 ```r
 # Median IBU by state - ordered by median
@@ -211,7 +194,7 @@ ggplot(plot.df, aes(State, y = median.ibu)) + geom_bar(stat = "identity")
 ## Warning: Removed 1 rows containing missing values (position_stack).
 ```
 
-![](Case_Study_1_-_US_Breweries_Analysis_files/figure-html/q5-2.png)<!-- -->
+![](HOTSHO~1/figure-html/q5-2.png)<!-- -->
 
 
 #### **Conclusion for medians:** The states with the highest median ABV is the District of Columbia. The state with the largest IBU is Maine. Both of these States would be a match for our expansion.
@@ -232,7 +215,7 @@ ggplot(beers, aes(x=State, y=ABV)) + geom_point(col="gray38", size=2) +geom_poin
 ## Warning: Removed 2240 rows containing missing values (geom_segment).
 ```
 
-![](Case_Study_1_-_US_Breweries_Analysis_files/figure-html/q6 part2-1.png)<!-- -->
+![](HOTSHO~1/figure-html/q6 part2-1.png)<!-- -->
 
 ```r
 #Maximum IBU of all States
@@ -246,7 +229,7 @@ ggplot(beers, aes(x=State, y=IBU)) + geom_point(col="gray38", size=2) +geom_poin
 ## Warning: Removed 2240 rows containing missing values (geom_segment).
 ```
 
-![](Case_Study_1_-_US_Breweries_Analysis_files/figure-html/q6 part2-2.png)<!-- -->
+![](HOTSHO~1/figure-html/q6 part2-2.png)<!-- -->
 
 #### **Conclusion for Max:** The state that has the maximum  alcoholic beer is Colorado. The state that has the most bitter beer is Oregon. These would both be good matches based on our criteria.
 
@@ -278,7 +261,7 @@ ggplot(beers, aes(IBU, ABV))+
 ## Warning: Removed 973 rows containing missing values (geom_point).
 ```
 
-![](Case_Study_1_-_US_Breweries_Analysis_files/figure-html/q7-1.png)<!-- -->
+![](HOTSHO~1/figure-html/q7-1.png)<!-- -->
 
 ```r
 pander::pander(summary(lm(ABV ~ IBU, data = beers)))
@@ -305,7 +288,7 @@ Table: Fitting linear model: ABV ~ IBU
 The model explains 44.93% of the variation in the ABV is explained by the IBU. As a result, there is not a strong linear relationship between ABV and IBU.
 
 ## Conclusion  
-Based on similiar ABVs and IBUs between Hotshot Hops beer and the state’s median, the states where Hotshot Hops will be the most successful are Maine, West Virginia, Florida, Georgia, New Mexico, West Virginia and Deleware.
+Based on similiar ABVs and IBUs between Hotshot Hops beer and the stateâ€™s median, the states where Hotshot Hops will be the most successful are Maine, West Virginia, Florida, Georgia, New Mexico, West Virginia and Deleware.
 
 ## Appendix
 ### State Count Table {#countTable}

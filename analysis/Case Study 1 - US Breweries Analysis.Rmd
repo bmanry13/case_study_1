@@ -2,36 +2,15 @@
 title: "Analysis of US Brewery Market"
 author: "Brychan Manry and Patricia Goresen"
 date: "October 23, 2017"
-output: 
-  html_document:
-    keep_md: true
-    theme: journal
-    toc: true
-    toc_float: true
+output: html_document
 ---
 
-```{r setup, warning=FALSE, message=FALSE}
+```{r setup}
 knitr::opts_chunk$set(echo = TRUE, message=FALSE)
-library(dplyr)
-library(kableExtra)
-library(knitr)
-library(ggplot2)
-library(ggthemes)
-library(tmap)
-library(tmaptools)
-library(grid)
-
-# source custom functions
-source("custom_functions.R")
 ```
 
 # Introduction 
 The Company Hotshot Hops is creating a plan to expand their brewery across the nation. This analysis used datasets "beer.csv" and "breweries.csv" to look at different factors that determine the success Hopshot will have in each state.
-
-## Ingest Data
-```{r dataingest, results='hide', message=FALSE}
-source("data_processing.R")
-```
 
 ## Q1: How many breweries are present in each state?
 #### **Reasoning:** More breweries means there will be more competition in that state.
