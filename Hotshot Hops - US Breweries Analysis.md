@@ -18,6 +18,7 @@ The Company Hotshot Hops is creating a plan to expand their brewery across the n
 5) Compare maximum ABV and IBU by state
 6) A summary of for the ABV values
 7) Test the apparent relationship between IBU and ABV?
+<hr>
 
 # Data Processing and Cleaning
 The raw "beer.csv" and "breweries.csv" data sets provided by Hotshot Hops, where processed using the 8 steps below. Additional information regarding the cleaning process can be found in the [codebook](https://github.com/bmanry13/case_study_1/blob/master/rawdata/Codebook.md) as well in the [data_processing.R](https://github.com/bmanry13/case_study_1/blob/master/source/data_processing.R) located on the GitHub repository.
@@ -32,12 +33,13 @@ The raw "beer.csv" and "breweries.csv" data sets provided by Hotshot Hops, where
 8) Merge datasets 
 
 *Map Shapefiles*: The map shapefiles were downloaded from the US States shapefiles data was acquired from the U.S. Census Bureau's MAF/TIGER geographic database can be accessed at https://www.census.gov/geo/maps-data/.
+<hr>
 
 # Analysis
 ## Q1: How many breweries are present in each state?
-#### **Reasoning:** More breweries means there will be more competition in that state.
+**State Brewery Count Reasoning:**  More breweries means there will be more competition in that state.
 
-To address this question we used the dplyr package to: group the breweries by State, and then summaries by state the number of beweries within. Those state-level counts were then joined to the map shapefile data and run through the makeMap custom function which creates the map plot below. The source for the makeMap function can be found in the [custom_functions.R](https://github.com/bmanry13/case_study_1/blob/master/source/custom_functions.R) source file in the analysis GitHub repository.
+*To address this question the dplyr package was used to: group the breweries by State, and then summaries by state the number of beweries within. Those state-level counts were then joined to the map shapefile data and run through the makeMap custom function which creates the map plot below. The source for the makeMap function can be found in the [custom_functions.R](https://github.com/bmanry13/case_study_1/blob/master/source/custom_functions.R) source file in the analysis GitHub repository.*
 
 
 ```r
@@ -59,10 +61,12 @@ makeMap(usa.states.shape,"n_breweries", "Number of Breweries by State")
 ![](HOTSHO~1/figure-html/q1map-1.png)<!-- -->
 The number of breweries in each state are shown in the table. The top five are Colorado with 47, California with 39, Michigan with 32, Oregon with 29 and Texas with 28. A full table of state brewery counts can be found [at the bottom of this report](#countTable)
 
-#### **Conclusion:** Since Colorado has the most breweries, Hotshot Hops might not want to expand there.
+**State Brewery Count Conclusion:** Since Colorado has the most breweries, Hotshot Hops might not want to expand there.
+<hr>
 
 ## Q2: Merge data and print first and last six observations
-To merge the data, the breweries data frame was joined to the beers data frame using the merge() function. Then head and tail calls were piped to a kable() function to produce tables for the top and bottom 6 rows of the data.
+*To merge the data, the breweries data frame was joined to the beers data frame using the merge() function. Then head and tail calls were piped to a kable() function to produce tables for the top and bottom 6 rows of the data.*
+
 
 ```r
 beers <- merge(beers, breweries, by.x = "Brewery_id", by.y = "Brew_ID")
@@ -100,9 +104,10 @@ Table: Last Six Rows of Merged Data
         558  Urban Wilderness Pale Ale         30   0.049    NA  English Pale Ale               12  Sleeping Lady Brewing Company   Anchorage       AK    
 
 The merged data is in a data frame called beers. The first six beers are Get Together, Maggie's Leap, Wall's End, Pumpion, Stronghold, and Parapet ESB. The last six beers are Pilsner Ukiah, Heinnieweisse Weissebier, Snapperhead IPA, Moo Thunder Stout, Porkslap Pale Ale, and Urban Wilderness Pale Ale.
+<hr>
 
 ## Q3: Report the number of NA's in each column
-The colSums() function in conjunction with the is.na() function was used to calculate the number of missing values for each column.
+*The colSums() function in conjunction with the is.na() function was used to calculate the number of missing values for each column.*
 
 
 ```r
@@ -116,9 +121,10 @@ colSums(is.na(beers))
 ##            5            0            0            0            0
 ```
 The ABV column has 62 NAs, the IBU column has 1005 NAs, and the other columns have 0 NAs.
+<hr>
 
 ## Q4: Compute the median alcohol content and international bitterness unit for each state. Plot a bar chart to compare
-To address this question the median ABV and IBU values were appended together then the medians for each were calculated using dplyr summaries(). The plot was created using ggplot with a facet grid to separate the ABV and IBU plots but while maintaining x-axis alignment.
+*To address this question the median ABV and IBU values were appended together then the medians for each were calculated using dplyr summaries(). The plot was created using ggplot with a facet grid to separate the ABV and IBU plots but while maintaining x-axis alignment.*
 
 
 ```r
@@ -142,9 +148,9 @@ ggplot(
 
 ![](HOTSHO~1/figure-html/q4-1.png)<!-- -->
 
-#### **ABV Reasoning:** A low median alcohol content could suggest there are strict state laws against brewing beers with higher alcohol content.  
+**State Median ABV Reasoning:** A low median alcohol content could suggest there are strict state laws against brewing beers with higher alcohol content.  
 
-Similar to Q1 above the dplyr package to: group the breweries by State, and then summaries the median values for ABV and IBU. Those state-level values were then joined to the map shapefile data and run through the makeMap custom function.
+*Similar to Q1 above the dplyr package to: group the breweries by State, and then summaries the median values for ABV and IBU. Those state-level values were then joined to the map shapefile data and run through the makeMap custom function.*
 
 
 ```r
@@ -158,9 +164,12 @@ makeMap(usa.states.shape, "med_abv", "Median ABV by State",seq(0.04,0.07,.005))
 
 ![](HOTSHO~1/figure-html/q4mapabv-1.png)<!-- -->
 
-#### **Conclusion:** Since Hotshot Hops does not want to expand in a state with strict laws against higher alcohol contents, they should consider ruling out expansion into Utah and Massachusetts. Hotshot Hops should consider potential expansions in: District of Columbia, Kentucky, Michigan, New Mexico, and West Virginia.  
+The states with the highest median ABV are the District of Columbia, Kentucky, Michigan, New Mexico, and West Virginia respectively.
 
-#### **IBU reasoning:** Hotshot Hops' beer has a relatively high international bitterness unit, â€œIBUâ€. As a result, we want to expand in a state that is use to drinking beers with higher IBUs.  
+**State Median ABV Conclusion:** Since Hotshot Hops does not want to expand in a state with strict laws against higher alcohol contents, they should consider ruling out expansion into Utah and Massachusetts. Hotshot Hops should consider potential expansions in: District of Columbia, Kentucky, Michigan, New Mexico, and West Virginia.
+<hr>
+
+**State Median IBU Reasoning:** Hotshot Hops' beer has a relatively high international bitterness unit (IBU). As a result, Hotshot Hops want to expand in a state that is use to drinking beers with higher IBUs.
 
 
 ```r
@@ -173,15 +182,16 @@ makeMap(usa.states.shape, "med_ibu", "Median IBU by State",seq(21,61,10))
 
 ![](HOTSHO~1/figure-html/q4mapibu-1.png)<!-- -->
 
+The states with the highest IBU are Maine, West Virginia, Florida, Georgia, and Deleware respectively.
 
-#### **Conclusion:** Since Maine, West Virginia, Florida, Georgia, and Deleware have the highest median IBUs Hotshot Hops should consider expanding there. Hotshot Hops should rule out all states that are in the 21 to 31 range.
-
-The states with the highest median ABV are the District of Columbia, Kentucky, Michigan, New Mexico, and West Virginia respectively. The states with the highest IBU are Maine, West Virginia, Florida, Georgia, and Deleware respectively.
+**Conclusion for state median IBU:** Since Maine, West Virginia, Florida, Georgia, and Deleware have the highest median IBUs Hotshot Hops should consider expanding there. Hotshot Hops should rule out all states that are in the 21 to 31 range.
+<hr>
 
 ## Q5: Which state has the maximum alcoholic beer? Which state has the most-bitter beer?
 
-#### **Reasoning for State's median ABV and IBU:** Similar to above, the state with the highest ABV is very unlikely to implement strict ABV laws. The state with the largest median IBU would indicate beers similar to Hotshot Hops's product lineup are present.
-Dplyr and summaries() were once again used to calculate max ABV and IBU by state. The results for each where then used to order the State variable factor levels so the ggplot bar plots would be ordered from highest to lowest.
+**Reasoning for State's maximum ABV and IBU:** Similar to above, the state with the highest ABV is unlikely to implement strict ABV laws. Additionally, the states with the largest maximum IBU and ABV would indicate beers in the market similar to Hotshot Hops's product lineup.
+
+*Dplyr and summaries() were once again used to calculate max ABV and IBU by state. The results for each where then used to order the State variable factor levels so the ggplot bar plots would be ordered from highest to lowest.*
 
 
 ```r
@@ -208,8 +218,8 @@ ggplot(plot.df, aes(State, y = max.ibu)) + geom_bar(stat = "identity") +
 
 ![](HOTSHO~1/figure-html/q5-2.png)<!-- -->
 
-#### **Conclusion for medians:** The states with the highest median ABV is the District of Columbia. The state with the largest IBU is Maine. Both of these States would be a match for Hotshot Hops' expansion.
-To further assess the range of ABV and IBU values ggplot was used to plot individual points for each beer within each state.
+
+*To further assess the range of ABV and IBU values ggplot was used to plot individual points for each beer within each state.*
 
 
 ```r
@@ -242,10 +252,11 @@ ggplot(beers, aes(x=State, y=IBU)) + geom_point(col="gray38", size=2) +geom_poin
 
 ![](HOTSHO~1/figure-html/q6 part2-2.png)<!-- -->
 
-#### **Conclusion for Max:** The state that has the maximum ABV beer is Colorado. The state that has the most-bitter beer is Oregon. These would both be good candidates for expansion based on Hotshot Hops' criteria.
+**Conclusion for Max ABV and IBU:** The state that has the maximum ABV beer is Colorado. The state that has the most-bitter beer is Oregon. These would both be good candidates for expansion based on Hotshot Hops' criteria.
+<hr>
 
 ## Q6: Summary statistics for the ABV
-A simple summary() call was used to calculate the summary stats for ABV.
+*A simple summary() call was used to calculate the summary stats for ABV.*
 
 
 ```r
@@ -257,9 +268,10 @@ summary(beers$ABV)
 ## 0.00100 0.05000 0.05600 0.05987 0.06800 0.12800      62
 ```
 The mean for the ABV variable is 0.05987 and the median is 0.056. The first quartile is 0.05 and the third quartile is 0.068 and the values range from 0.001 to 0.128 with 62 NAs.
+<hr>
 
 ## Q7: Is there an apparent relationship between the bitterness of the beer and its alcoholic content?
-To create the plot for this question ggplot was used to make a point plot then add a linear smoothing line. The actual linear model was created with the lm() function then the results were formatted for use in html with pander().
+*To create the plot for this question ggplot was used to make a point plot then add a linear smoothing line. The actual linear model was created with the lm() function then the results were formatted for use in html with pander().*
 
 
 ```r
@@ -303,7 +315,7 @@ Table: Fitting linear model: ABV ~ IBU
 The model explains 44.93% of the variation in the ABV is explained by the IBU. As a result, there is not a strong linear relationship between ABV and IBU.
 
 # Conclusion  
-Based on similar ABVs and IBUs between Hotshot Hops beer and the stateâ€™s median, the states where Hotshot Hops will be the most successful are Maine, West Virginia, Florida, Georgia, New Mexico, West Virginia and Deleware.
+Based on similar ABVs and IBUs between Hotshot Hops beer and the stateâ€™s median, the states in which Hotshot Hops would most-likely be successful are Maine, West Virginia, Florida, Georgia, New Mexico, West Virginia and Deleware.
 
 # Appendix
 ## State Count Table {#countTable}
