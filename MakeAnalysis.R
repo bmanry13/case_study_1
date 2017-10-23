@@ -9,13 +9,17 @@
 
 ##### LOAD ALL LIBRARIES REQUIRED FOR ANALYSIS #####
 library(dplyr)
+library(readr)
 library(kableExtra)
 library(knitr)
 library(ggplot2)
 library(ggthemes)
+library(rgdal)
 library(tmap)
 library(tmaptools)
+library(pander)
 library(grid)
+library(data.tree)
 
 ##### INGEST DATA #####
 source("./source/data_processing.R")
