@@ -3,11 +3,11 @@
 # Introduction
 This codebook contains information about the raw datasets, how it was cleaned and merged, and the final, tidy dataset.
 
-#Raw Data Sets:
+# Raw Data Sets:
 * Beers.csv
 * Breweries.csv
  
-#Variables for Beers.csv:
+# Variables for Beers.csv:
 * Name: Name of the beer
 * Beer_ID: Unique identifier of the beer
 * ABV: Alcohol by volume of the beer
@@ -23,10 +23,10 @@ This codebook contains information about the raw datasets, how it was cleaned an
 * State: State where the brewery is located
  
 # Packages used for cleaning up the datasets
-library(dplyr)
-library(readr)
+* library(dplyr)
+* library(readr)
 
-#Steps for tidying data (Code is contained in "data_processing.R")
+# Steps for tidying data (Code is contained in "data_processing.R")
 1. Read in Beer.csv and Breweries.csv  
 2. Remove Duplicate Observations from datasets  
 3. Remove unnecessary whitespace from values 
