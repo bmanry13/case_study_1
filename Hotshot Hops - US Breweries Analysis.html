@@ -222,10 +222,14 @@ div.tocify {
 </div>
 
 
+<p><a href="https://github.com/bmanry13/case_study_1">Link to Github Repository</a></p>
 <pre class="r"><code>knitr::opts_chunk$set(echo = TRUE, message=FALSE)</code></pre>
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
 <p>The Company Hotshot Hops is creating a plan to expand their brewery across the nation. This analysis used datasets “beer.csv” and “breweries.csv” to look at different factors that determine the success Hopshot will have in each state.</p>
+</div>
+<div id="analysis" class="section level1">
+<h1>Analysis</h1>
 <div id="q1-how-many-breweries-are-present-in-each-state" class="section level2">
 <h2>Q1: How many breweries are present in each state?</h2>
 <div id="reasoning-more-breweries-means-there-will-be-more-competition-in-that-state." class="section level4">
@@ -246,50 +250,190 @@ div.tocify {
 <div id="q2-merge-data-and-print-first-and-last-six-observations" class="section level2">
 <h2>Q2: Merge data and print first and last six observations</h2>
 <pre class="r"><code>beers &lt;- merge(beers, breweries, by.x = &quot;Brewery_id&quot;, by.y = &quot;Brew_ID&quot;)
-head(beers, n=6)</code></pre>
-<pre><code>##   Brewery_id     Beer_Name Beer_ID   ABV IBU
-## 1          1  Get Together    2692 0.045  50
-## 2          1 Maggie's Leap    2691 0.049  26
-## 3          1    Wall's End    2690 0.048  19
-## 4          1       Pumpion    2689 0.060  38
-## 5          1    Stronghold    2688 0.060  25
-## 6          1   Parapet ESB    2687 0.056  47
-##                                 Style Ounces      Brewery_Name        City
-## 1                        American IPA     16 NorthGate Brewing Minneapolis
-## 2                  Milk / Sweet Stout     16 NorthGate Brewing Minneapolis
-## 3                   English Brown Ale     16 NorthGate Brewing Minneapolis
-## 4                         Pumpkin Ale     16 NorthGate Brewing Minneapolis
-## 5                     American Porter     16 NorthGate Brewing Minneapolis
-## 6 Extra Special / Strong Bitter (ESB)     16 NorthGate Brewing Minneapolis
-##   State
-## 1    MN
-## 2    MN
-## 3    MN
-## 4    MN
-## 5    MN
-## 6    MN</code></pre>
-<pre class="r"><code>tail(beers,n=6)</code></pre>
-<pre><code>##      Brewery_id                 Beer_Name Beer_ID   ABV IBU
-## 2235        556             Pilsner Ukiah      98 0.055  NA
-## 2236        557  Heinnieweisse Weissebier      52 0.049  NA
-## 2237        557           Snapperhead IPA      51 0.068  NA
-## 2238        557         Moo Thunder Stout      50 0.049  NA
-## 2239        557         Porkslap Pale Ale      49 0.043  NA
-## 2240        558 Urban Wilderness Pale Ale      30 0.049  NA
-##                        Style Ounces                  Brewery_Name
-## 2235         German Pilsener     12         Ukiah Brewing Company
-## 2236              Hefeweizen     12       Butternuts Beer and Ale
-## 2237            American IPA     12       Butternuts Beer and Ale
-## 2238      Milk / Sweet Stout     12       Butternuts Beer and Ale
-## 2239 American Pale Ale (APA)     12       Butternuts Beer and Ale
-## 2240        English Pale Ale     12 Sleeping Lady Brewing Company
-##               City State
-## 2235         Ukiah    CA
-## 2236 Garrattsville    NY
-## 2237 Garrattsville    NY
-## 2238 Garrattsville    NY
-## 2239 Garrattsville    NY
-## 2240     Anchorage    AK</code></pre>
+head(beers, n=6) %&gt;% kable(row.names = FALSE, caption = &quot;First Six Rows of Merged Data&quot;)</code></pre>
+<table>
+<caption>First Six Rows of Merged Data</caption>
+<thead>
+<tr class="header">
+<th align="right">Brewery_id</th>
+<th align="left">Beer_Name</th>
+<th align="right">Beer_ID</th>
+<th align="right">ABV</th>
+<th align="right">IBU</th>
+<th align="left">Style</th>
+<th align="right">Ounces</th>
+<th align="left">Brewery_Name</th>
+<th align="left">City</th>
+<th align="left">State</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="left">Get Together</td>
+<td align="right">2692</td>
+<td align="right">0.045</td>
+<td align="right">50</td>
+<td align="left">American IPA</td>
+<td align="right">16</td>
+<td align="left">NorthGate Brewing</td>
+<td align="left">Minneapolis</td>
+<td align="left">MN</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="left">Maggie’s Leap</td>
+<td align="right">2691</td>
+<td align="right">0.049</td>
+<td align="right">26</td>
+<td align="left">Milk / Sweet Stout</td>
+<td align="right">16</td>
+<td align="left">NorthGate Brewing</td>
+<td align="left">Minneapolis</td>
+<td align="left">MN</td>
+</tr>
+<tr class="odd">
+<td align="right">1</td>
+<td align="left">Wall’s End</td>
+<td align="right">2690</td>
+<td align="right">0.048</td>
+<td align="right">19</td>
+<td align="left">English Brown Ale</td>
+<td align="right">16</td>
+<td align="left">NorthGate Brewing</td>
+<td align="left">Minneapolis</td>
+<td align="left">MN</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="left">Pumpion</td>
+<td align="right">2689</td>
+<td align="right">0.060</td>
+<td align="right">38</td>
+<td align="left">Pumpkin Ale</td>
+<td align="right">16</td>
+<td align="left">NorthGate Brewing</td>
+<td align="left">Minneapolis</td>
+<td align="left">MN</td>
+</tr>
+<tr class="odd">
+<td align="right">1</td>
+<td align="left">Stronghold</td>
+<td align="right">2688</td>
+<td align="right">0.060</td>
+<td align="right">25</td>
+<td align="left">American Porter</td>
+<td align="right">16</td>
+<td align="left">NorthGate Brewing</td>
+<td align="left">Minneapolis</td>
+<td align="left">MN</td>
+</tr>
+<tr class="even">
+<td align="right">1</td>
+<td align="left">Parapet ESB</td>
+<td align="right">2687</td>
+<td align="right">0.056</td>
+<td align="right">47</td>
+<td align="left">Extra Special / Strong Bitter (ESB)</td>
+<td align="right">16</td>
+<td align="left">NorthGate Brewing</td>
+<td align="left">Minneapolis</td>
+<td align="left">MN</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>tail(beers,n=6) %&gt;% kable(row.names = FALSE, caption = &quot;Last Six Rows of Merged Data&quot;)</code></pre>
+<table>
+<caption>Last Six Rows of Merged Data</caption>
+<thead>
+<tr class="header">
+<th align="right">Brewery_id</th>
+<th align="left">Beer_Name</th>
+<th align="right">Beer_ID</th>
+<th align="right">ABV</th>
+<th align="right">IBU</th>
+<th align="left">Style</th>
+<th align="right">Ounces</th>
+<th align="left">Brewery_Name</th>
+<th align="left">City</th>
+<th align="left">State</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">556</td>
+<td align="left">Pilsner Ukiah</td>
+<td align="right">98</td>
+<td align="right">0.055</td>
+<td align="right">NA</td>
+<td align="left">German Pilsener</td>
+<td align="right">12</td>
+<td align="left">Ukiah Brewing Company</td>
+<td align="left">Ukiah</td>
+<td align="left">CA</td>
+</tr>
+<tr class="even">
+<td align="right">557</td>
+<td align="left">Heinnieweisse Weissebier</td>
+<td align="right">52</td>
+<td align="right">0.049</td>
+<td align="right">NA</td>
+<td align="left">Hefeweizen</td>
+<td align="right">12</td>
+<td align="left">Butternuts Beer and Ale</td>
+<td align="left">Garrattsville</td>
+<td align="left">NY</td>
+</tr>
+<tr class="odd">
+<td align="right">557</td>
+<td align="left">Snapperhead IPA</td>
+<td align="right">51</td>
+<td align="right">0.068</td>
+<td align="right">NA</td>
+<td align="left">American IPA</td>
+<td align="right">12</td>
+<td align="left">Butternuts Beer and Ale</td>
+<td align="left">Garrattsville</td>
+<td align="left">NY</td>
+</tr>
+<tr class="even">
+<td align="right">557</td>
+<td align="left">Moo Thunder Stout</td>
+<td align="right">50</td>
+<td align="right">0.049</td>
+<td align="right">NA</td>
+<td align="left">Milk / Sweet Stout</td>
+<td align="right">12</td>
+<td align="left">Butternuts Beer and Ale</td>
+<td align="left">Garrattsville</td>
+<td align="left">NY</td>
+</tr>
+<tr class="odd">
+<td align="right">557</td>
+<td align="left">Porkslap Pale Ale</td>
+<td align="right">49</td>
+<td align="right">0.043</td>
+<td align="right">NA</td>
+<td align="left">American Pale Ale (APA)</td>
+<td align="right">12</td>
+<td align="left">Butternuts Beer and Ale</td>
+<td align="left">Garrattsville</td>
+<td align="left">NY</td>
+</tr>
+<tr class="even">
+<td align="right">558</td>
+<td align="left">Urban Wilderness Pale Ale</td>
+<td align="right">30</td>
+<td align="right">0.049</td>
+<td align="right">NA</td>
+<td align="left">English Pale Ale</td>
+<td align="right">12</td>
+<td align="left">Sleeping Lady Brewing Company</td>
+<td align="left">Anchorage</td>
+<td align="left">AK</td>
+</tr>
+</tbody>
+</table>
 <p>The merged data is in a data frame called beers. The first six beers are Get Together, Maggie’s Leap, Wall’s End, Pumpion, Stronghold, and Parapet ESB. The last six beers are Pilsner Ukiah, Heinnieweisse Weissebier, Snapperhead IPA, Moo Thunder Stout, Porkslap Pale Ale, and Urban Wilderness Pale Ale.</p>
 </div>
 <div id="q3-report-the-number-of-nas-in-each-column" class="section level2">
@@ -455,14 +599,15 @@ ggplot(beers, aes(x=State, y=IBU)) + geom_point(col=&quot;gray38&quot;, size=2) 
 </table>
 <p>The model explains 44.93% of the variation in the ABV is explained by the IBU. As a result, there is not a strong linear relationship between ABV and IBU.</p>
 </div>
-<div id="conclusion" class="section level2">
-<h2>Conclusion</h2>
+</div>
+<div id="conclusion" class="section level1">
+<h1>Conclusion</h1>
 <p>Based on similiar ABVs and IBUs between Hotshot Hops beer and the stateâ€™s median, the states where Hotshot Hops will be the most successful are Maine, West Virginia, Florida, Georgia, New Mexico, West Virginia and Deleware.</p>
 </div>
-<div id="appendix" class="section level2">
-<h2>Appendix</h2>
-<div id="countTable" class="section level3">
-<h3>State Count Table</h3>
+<div id="appendix" class="section level1">
+<h1>Appendix</h1>
+<div id="countTable" class="section level2">
+<h2>State Count Table</h2>
 <pre class="r"><code>as.data.frame(table(breweries$State), responseName = &quot;Number of Breweries&quot;) %&gt;% rename(State = Var1) %&gt;% kable()</code></pre>
 <table>
 <thead>
@@ -678,11 +823,6 @@ ggplot(beers, aes(x=State, y=IBU)) + geom_point(col=&quot;gray38&quot;, size=2) 
 </tr>
 </tbody>
 </table>
-</div>
-<div id="link-to-github-repository" class="section level3">
-<h3>Link to Github Repository</h3>
-<p>[link] (<a href="https://github.com/bmanry13/case_study_1" class="uri">https://github.com/bmanry13/case_study_1</a>)</p>
-</div>
 </div>
 </div>
 

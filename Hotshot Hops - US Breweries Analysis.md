@@ -1,6 +1,7 @@
 # Analysis of US Brewery Market
 Brychan Manry and Patricia Goresen  
 October 23, 2017  
+[Link to Github Repository](https://github.com/bmanry13/case_study_1)
 
 
 ```r
@@ -10,6 +11,7 @@ knitr::opts_chunk$set(echo = TRUE, message=FALSE)
 # Introduction 
 The Company Hotshot Hops is creating a plan to expand their brewery across the nation. This analysis used datasets "beer.csv" and "breweries.csv" to look at different factors that determine the success Hopshot will have in each state.
 
+# Analysis
 ## Q1: How many breweries are present in each state?
 #### **Reasoning:** More breweries means there will be more competition in that state.
 
@@ -38,60 +40,39 @@ The number of breweries in each state are shown in the table. The top five are C
 
 ```r
 beers <- merge(beers, breweries, by.x = "Brewery_id", by.y = "Brew_ID")
-head(beers, n=6)
+head(beers, n=6) %>% kable(row.names = FALSE, caption = "First Six Rows of Merged Data")
 ```
 
-```
-##   Brewery_id     Beer_Name Beer_ID   ABV IBU
-## 1          1  Get Together    2692 0.045  50
-## 2          1 Maggie's Leap    2691 0.049  26
-## 3          1    Wall's End    2690 0.048  19
-## 4          1       Pumpion    2689 0.060  38
-## 5          1    Stronghold    2688 0.060  25
-## 6          1   Parapet ESB    2687 0.056  47
-##                                 Style Ounces      Brewery_Name        City
-## 1                        American IPA     16 NorthGate Brewing Minneapolis
-## 2                  Milk / Sweet Stout     16 NorthGate Brewing Minneapolis
-## 3                   English Brown Ale     16 NorthGate Brewing Minneapolis
-## 4                         Pumpkin Ale     16 NorthGate Brewing Minneapolis
-## 5                     American Porter     16 NorthGate Brewing Minneapolis
-## 6 Extra Special / Strong Bitter (ESB)     16 NorthGate Brewing Minneapolis
-##   State
-## 1    MN
-## 2    MN
-## 3    MN
-## 4    MN
-## 5    MN
-## 6    MN
-```
+
+
+Table: First Six Rows of Merged Data
+
+ Brewery_id  Beer_Name        Beer_ID     ABV   IBU  Style                                  Ounces  Brewery_Name        City          State 
+-----------  --------------  --------  ------  ----  ------------------------------------  -------  ------------------  ------------  ------
+          1  Get Together        2692   0.045    50  American IPA                               16  NorthGate Brewing   Minneapolis   MN    
+          1  Maggie's Leap       2691   0.049    26  Milk / Sweet Stout                         16  NorthGate Brewing   Minneapolis   MN    
+          1  Wall's End          2690   0.048    19  English Brown Ale                          16  NorthGate Brewing   Minneapolis   MN    
+          1  Pumpion             2689   0.060    38  Pumpkin Ale                                16  NorthGate Brewing   Minneapolis   MN    
+          1  Stronghold          2688   0.060    25  American Porter                            16  NorthGate Brewing   Minneapolis   MN    
+          1  Parapet ESB         2687   0.056    47  Extra Special / Strong Bitter (ESB)        16  NorthGate Brewing   Minneapolis   MN    
 
 ```r
-tail(beers,n=6)
+tail(beers,n=6) %>% kable(row.names = FALSE, caption = "Last Six Rows of Merged Data")
 ```
 
-```
-##      Brewery_id                 Beer_Name Beer_ID   ABV IBU
-## 2235        556             Pilsner Ukiah      98 0.055  NA
-## 2236        557  Heinnieweisse Weissebier      52 0.049  NA
-## 2237        557           Snapperhead IPA      51 0.068  NA
-## 2238        557         Moo Thunder Stout      50 0.049  NA
-## 2239        557         Porkslap Pale Ale      49 0.043  NA
-## 2240        558 Urban Wilderness Pale Ale      30 0.049  NA
-##                        Style Ounces                  Brewery_Name
-## 2235         German Pilsener     12         Ukiah Brewing Company
-## 2236              Hefeweizen     12       Butternuts Beer and Ale
-## 2237            American IPA     12       Butternuts Beer and Ale
-## 2238      Milk / Sweet Stout     12       Butternuts Beer and Ale
-## 2239 American Pale Ale (APA)     12       Butternuts Beer and Ale
-## 2240        English Pale Ale     12 Sleeping Lady Brewing Company
-##               City State
-## 2235         Ukiah    CA
-## 2236 Garrattsville    NY
-## 2237 Garrattsville    NY
-## 2238 Garrattsville    NY
-## 2239 Garrattsville    NY
-## 2240     Anchorage    AK
-```
+
+
+Table: Last Six Rows of Merged Data
+
+ Brewery_id  Beer_Name                    Beer_ID     ABV   IBU  Style                      Ounces  Brewery_Name                    City            State 
+-----------  --------------------------  --------  ------  ----  ------------------------  -------  ------------------------------  --------------  ------
+        556  Pilsner Ukiah                     98   0.055    NA  German Pilsener                12  Ukiah Brewing Company           Ukiah           CA    
+        557  Heinnieweisse Weissebier          52   0.049    NA  Hefeweizen                     12  Butternuts Beer and Ale         Garrattsville   NY    
+        557  Snapperhead IPA                   51   0.068    NA  American IPA                   12  Butternuts Beer and Ale         Garrattsville   NY    
+        557  Moo Thunder Stout                 50   0.049    NA  Milk / Sweet Stout             12  Butternuts Beer and Ale         Garrattsville   NY    
+        557  Porkslap Pale Ale                 49   0.043    NA  American Pale Ale (APA)        12  Butternuts Beer and Ale         Garrattsville   NY    
+        558  Urban Wilderness Pale Ale         30   0.049    NA  English Pale Ale               12  Sleeping Lady Brewing Company   Anchorage       AK    
+
 The merged data is in a data frame called beers. The first six beers are Get Together, Maggie's Leap, Wall's End, Pumpion, Stronghold, and Parapet ESB. The last six beers are Pilsner Ukiah, Heinnieweisse Weissebier, Snapperhead IPA, Moo Thunder Stout, Porkslap Pale Ale, and Urban Wilderness Pale Ale.
 
 ## Q3: Report the number of NA's in each column
@@ -287,11 +268,11 @@ Table: Fitting linear model: ABV ~ IBU
 
 The model explains 44.93% of the variation in the ABV is explained by the IBU. As a result, there is not a strong linear relationship between ABV and IBU.
 
-## Conclusion  
+# Conclusion  
 Based on similiar ABVs and IBUs between Hotshot Hops beer and the stateâ€™s median, the states where Hotshot Hops will be the most successful are Maine, West Virginia, Florida, Georgia, New Mexico, West Virginia and Deleware.
 
-## Appendix
-### State Count Table {#countTable}
+# Appendix
+## State Count Table {#countTable}
 
 ```r
 as.data.frame(table(breweries$State), responseName = "Number of Breweries") %>% rename(State = Var1) %>% kable()
@@ -353,8 +334,6 @@ WI                        19
 WV                         1
 WY                         4
 
-### Link to Github Repository
-[link] (https://github.com/bmanry13/case_study_1)
 
 
 

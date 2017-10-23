@@ -92,40 +92,38 @@ data.tree::as.Node(data.frame(pathString = paste0("Root/",list.files(recursive =
 ## 1  Root                                            
 ## 2   ¦--analysis                                    
 ## 3   ¦   °--Case Study 1 - US Breweries Analysis.Rmd
-## 4   ¦--case study 1.Rproj                          
-## 5   ¦--case_study_1.Rproj                          
-## 6   ¦--Hotshot Hops - US Breweries Analysis.html   
-## 7   ¦--Hotshot Hops - US Breweries Analysis.md     
-## 8   ¦--Hotshot Hops - US Breweries Analysis_files  
-## 9   ¦   °--figure-html                             
-## 10  ¦       ¦--q1map-1.png                         
-## 11  ¦       ¦--q4-1.png                            
-## 12  ¦       ¦--q4mapabv-1.png                      
-## 13  ¦       ¦--q4mapibu-1.png                      
-## 14  ¦       ¦--q5-1.png                            
-## 15  ¦       ¦--q5-2.png                            
-## 16  ¦       ¦--q6 part2-1.png                      
-## 17  ¦       ¦--q6 part2-2.png                      
-## 18  ¦       °--q7-1.png                            
-## 19  ¦--MakeAnalysis.R                              
-## 20  ¦--mapdata                                     
-## 21  ¦   ¦--cb_2016_us_state_500k.cpg               
-## 22  ¦   ¦--cb_2016_us_state_500k.dbf               
-## 23  ¦   ¦--cb_2016_us_state_500k.prj               
-## 24  ¦   ¦--cb_2016_us_state_500k.shp               
-## 25  ¦   ¦--cb_2016_us_state_500k.shp.ea.iso.xml    
-## 26  ¦   ¦--cb_2016_us_state_500k.shp.iso.xml       
-## 27  ¦   ¦--cb_2016_us_state_500k.shp.xml           
-## 28  ¦   ¦--cb_2016_us_state_500k.shx               
-## 29  ¦   °--README.md                               
-## 30  ¦--rawdata                                     
-## 31  ¦   ¦--Beers.csv                               
-## 32  ¦   ¦--Breweries.csv                           
-## 33  ¦   °--Codebook.md                             
-## 34  ¦--README.md                                   
-## 35  ¦--README.Rmd                                  
-## 36  °--source                                      
-## 37      ¦--custom_functions.R                      
-## 38      °--data_processing.R
+## 4   ¦--Hotshot Hops - US Breweries Analysis.html   
+## 5   ¦--Hotshot Hops - US Breweries Analysis.md     
+## 6   ¦--Hotshot Hops - US Breweries Analysis_files  
+## 7   ¦   °--figure-html                             
+## 8   ¦       ¦--q1map-1.png                         
+## 9   ¦       ¦--q4-1.png                            
+## 10  ¦       ¦--q4mapabv-1.png                      
+## 11  ¦       ¦--q4mapibu-1.png                      
+## 12  ¦       ¦--q5-1.png                            
+## 13  ¦       ¦--q5-2.png                            
+## 14  ¦       ¦--q6 part2-1.png                      
+## 15  ¦       ¦--q6 part2-2.png                      
+## 16  ¦       °--q7-1.png                            
+## 17  ¦--MakeAnalysis.R                              
+## 18  ¦--mapdata                                     
+## 19  ¦   ¦--cb_2016_us_state_500k.cpg               
+## 20  ¦   ¦--cb_2016_us_state_500k.dbf               
+## 21  ¦   ¦--cb_2016_us_state_500k.prj               
+## 22  ¦   ¦--cb_2016_us_state_500k.shp               
+## 23  ¦   ¦--cb_2016_us_state_500k.shp.ea.iso.xml    
+## 24  ¦   ¦--cb_2016_us_state_500k.shp.iso.xml       
+## 25  ¦   ¦--cb_2016_us_state_500k.shp.xml           
+## 26  ¦   ¦--cb_2016_us_state_500k.shx               
+## 27  ¦   °--README.md                               
+## 28  ¦--rawdata                                     
+## 29  ¦   ¦--Beers.csv                               
+## 30  ¦   ¦--Breweries.csv                           
+## 31  ¦   °--Codebook.md                             
+## 32  ¦--README.md                                   
+## 33  ¦--README.Rmd                                  
+## 34  °--source                                      
+## 35      ¦--custom_functions.R                      
+## 36      °--data_processing.R
 ```
 
