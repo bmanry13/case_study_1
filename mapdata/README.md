@@ -1,0 +1,1 @@
+Map ShapeFile data was aquired from the U.S. Cencus Bureau's MAF/TIGER geographic database can be accessed at [https://www.census.gov/geo/maps-data/](https://www.census.gov/geo/maps-data/). The exact files used for this projet are the 2016 US State 500k shapefiles and can be downloaded [here](http://www2.census.gov/geo/tiger/GENZ2016/shp/cb_2016_us_state_500k.zip) 

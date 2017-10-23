@@ -25,13 +25,16 @@ library(grid)
 source("custom_functions.R")
 ```
 
+# Introduction 
+The Company Hotshot Hops is creating a plan to expand their brewery across the nation. This analysis used datasets "beer.csv" and "breweries.csv" to look at different factors that determine the success Hopshot will have in each state.
+
 ## Ingest Data
 ```{r dataingest, results='hide', message=FALSE}
 source("data_processing.R")
 ```
 
 ## Q1: How many breweries are present in each state?
-
+#### **Reasoning:** More breweries means there will be more competition in that state.
 ```{r q1map, fig.width=11, fig.height=6}
 usa.states.shape@data <- usa.states.shape@data %>%
   left_join(
@@ -39,12 +42,15 @@ usa.states.shape@data <- usa.states.shape@data %>%
   )
 makeMap(usa.states.shape,"n_breweries", "Number of Breweries by State")
 ```
-
 The number of breweries in each state are shown in the table. The top five are Colorado with 47, California with 39, Michigan with 32, Oregon with 29 and Texas with 28. A full table of state brewery counts can be found [at the bottom of this report](#countTable)
+
+#### **Conclusion:** Since Colorado has the most breweries, we might not want to expand there.
 
 ## Q2: Merge data and print first and last six observations
 ```{r q2}
 beers <- merge(beers, breweries, by.x = "Brewery_id", by.y = "Brew_ID")
+head(beers, n=6)
+tail(beers,n=6)
 ```
 The merged data is in a data frame called beers. The first six beers are Get Together, Maggie's Leap, Wall's End, Pumpion, Stronghold, and Parapet ESB. The last six beers are Pilsner Ukiah, Heinnieweisse Weissebier, Snapperhead IPA, Moo Thunder Stout, Porkslap Pale Ale, and Urban Wilderness Pale Ale.
 
@@ -69,6 +75,10 @@ ggplot(
 
 ```
 
+
+#### **ABV Reasoning:** A low median alcohol content could suggest there are strict state laws against brewing beers with higher alcohol content.  
+
+
 ```{r q4mapabv, fig.width=11}
 usa.states.shape@data <- usa.states.shape@data %>%
   left_join(
@@ -78,6 +88,12 @@ usa.states.shape@data <- usa.states.shape@data %>%
 makeMap(usa.states.shape, "med_abv", "Median ABV by State",seq(0.04,0.07,.005))
 ```
 
+
+#### **Conclusion:** Since we do not want to expand in a state with strict laws against higher alcohol contents we will rule out expanding in Utah and Massachusetts. We will consider expanding in District of Columbia, Kentucky, Michigan, New Mexico, and West Virginia.  
+
+#### **IBU reasoning:** Our beer has a relatively high international bitterness unit, “IBU”. As a result, we want to expand in a state that is use to drinking beers with higher IBUs.  
+
+
 ```{r q4mapibu, fig.width=11}
 usa.states.shape@data <- usa.states.shape@data %>%
   left_join(
@@ -86,9 +102,17 @@ usa.states.shape@data <- usa.states.shape@data %>%
 makeMap(usa.states.shape, "med_ibu", "Median IBU by State",seq(21,61,10))
 ```
 
+
+#### **Conclusion:** Since Maine, West Virginia, Florida, Georgia, and Deleware have the highest median IBUs we will consider expanding there. We will rule out all states that are in the 21 to 31 range.
+
 The states with the highest median ABV are the District of Columbia, Kentucky, Michigan, New Mexico, and West Virginia respectively. The states with the highest IBU are Maine, West Virginia, Florida, Georgia, and Deleware respectively.
 
+
 ## Q5: Which state has the maximum alcoholic beer? Which state has the most bitter beer?
+
+#### **Reasoning for State's median ABV and IBU:** Similiar to above, the state with the highest ABV is very unlikely to implement strict ABV laws. The state with the biggest median IBU means beers similiar to ours are present.
+
+
 ```{r q5, fig.width=11}
 # Median ABV by state - ordered by median
 plot.df <- beers %>% group_by(State) %>% summarise(median.abv = median(ABV, na.rm = TRUE))
@@ -102,7 +126,9 @@ ggplot(plot.df, aes(State, y = median.ibu)) + geom_bar(stat = "identity")
 
 ```
 
-**Looking at the State's median:** The state that has the maximum  alcoholic beers is the District of Columbia. The state that has the most bitter beers is Maine.
+
+#### **Conclusion for medians:** The states with the highest median ABV is the District of Columbia. The state with the largest IBU is Maine. Both of these States would be a match for our expansion.
+
 
 ```{r q6 part2}
 #Maximum ABV of all States
@@ -113,7 +139,7 @@ MaxIBU <- beers[which.max(beers$IBU),]
 ggplot(beers, aes(x=State, y=IBU)) + geom_point(col="gray38", size=2) +geom_point(data=MaxIBU, col="red2", size=2.5) + geom_text(data=MaxIBU, label="Max IBU", vjust=1.4) + geom_segment(aes(x=State, xend= State, y=min(IBU), yend=max(IBU)), linetype="dashed", size=0.1) + labs(title= "IBU values for Corresponding States") + theme(axis.text.x=element_text(angle=90, hjust=1))
 ```
 
-**Looking at the Maximums:** The state that has the maximum  alcoholic beer is Colorado. The state that has the most bitter beer is Oregon.
+#### **Conclusion for Max:** The state that has the maximum  alcoholic beer is Colorado. The state that has the most bitter beer is Oregon. These would both be good matches based on our criteria.
 
 ## Q6: Summary statistics for the ABV
 ```{r q6}
@@ -132,6 +158,9 @@ pander::pander(summary(lm(ABV ~ IBU, data = beers)))
 ```
 
 The model explains 44.93% of the variation in the ABV is explained by the IBU. As a result, there is not a strong linear relationship between ABV and IBU.
+
+## Conclusion  
+Based on similiar ABVs and IBUs between Hotshot Hops beer and the state’s median, the states where Hotshot Hops will be the most successful are Maine, West Virginia, Florida, Georgia, New Mexico, West Virginia and Deleware.
 
 ## Appendix
 ### State Count Table {#countTable}
