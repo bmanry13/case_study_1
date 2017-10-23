@@ -6,8 +6,14 @@
 # Description: This source file reads in raw csv files provided for analysis and 
 #               processes the data. It also reads in map shapefile information 
 #               from the US Census Bureau TIGER repository
+# Citation / Acknowledgements
+#     US States shapefiles data was aquired from the U.S. Cencus Bureau's MAF/TIGER
+#     geographic database can be accessed at https://www.census.gov/geo/maps-data/. 
+#     The exact files used for this projet are the 2016 US State 500k shapefiles
+#     and can be downloaded from: 
+#     http://www2.census.gov/geo/tiger/GENZ2016/shp/cb_2016_us_state_500k.zip
 #
-# R libraries: dplyr, readr
+# R libraries: dplyr, readr, rgdal
 # input files: Beers.csv, Breweries.csv, /mapdata/cb_2016_us_state_500k (shapefile folder)
 #
 # Output:
@@ -130,8 +136,3 @@ usa.states.shape <- subset(usa.states.shape, State%in%breweries$State)
 
 ##### 9) Cleanup #####
 rm(list = c("beerIDTable", "dedupDF", "removeLeadTrailWS"))
-
-
-
-
-
