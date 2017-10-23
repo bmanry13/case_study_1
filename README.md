@@ -120,11 +120,12 @@ data.tree::as.Node(data.frame(pathString = paste0("Root/",list.files(recursive =
 ## 29  ¦--rawdata                                     
 ## 30  ¦   ¦--Beers.csv                               
 ## 31  ¦   ¦--Breweries.csv                           
-## 32  ¦   °--Codebook.md                             
-## 33  ¦--README.md                                   
-## 34  ¦--README.Rmd                                  
-## 35  °--source                                      
-## 36      ¦--custom_functions.R                      
-## 37      °--data_processing.R
+## 32  ¦   ¦--Codebook.md                             
+## 33  ¦   °--README.md                               
+## 34  ¦--README.md                                   
+## 35  ¦--README.Rmd                                  
+## 36  °--source                                      
+## 37      ¦--custom_functions.R                      
+## 38      °--data_processing.R
 ```
 

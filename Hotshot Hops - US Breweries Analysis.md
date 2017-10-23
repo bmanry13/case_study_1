@@ -315,7 +315,7 @@ Table: Fitting linear model: ABV ~ IBU
 The model explains 44.93% of the variation in the ABV is explained by the IBU. As a result, there is not a strong linear relationship between ABV and IBU.
 
 # Conclusion  
-Based on similar ABVs and IBUs between Hotshot Hops beer and the stateâ€™s median, the states in which Hotshot Hops would most-likely be successful are Maine, West Virginia, Florida, Georgia, New Mexico, West Virginia and Deleware.
+Based on similar ABVs and IBUs between Hotshot Hops beer and the state's median, the states in which Hotshot Hops would most-likely be successful are Maine, West Virginia, Florida, Georgia, New Mexico, West Virginia and Deleware.
 
 # Appendix
 ## State Count Table {#countTable}
